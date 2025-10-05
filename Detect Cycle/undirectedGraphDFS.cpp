@@ -16,8 +16,11 @@ bool solve(int u, vector<vector<int>> &edges, int parent, vector<bool> &visited)
     }
     return false;
 }
-bool isCycle(int V, vector<vector<int>> &edges)
+
+int main()
 {
+    int V = 3;
+    vector<vector<int>> edges = {{0, 1}, {1, 2}, {2, 0}};
     vector<bool> visited(V, false);
     vector<vector<int>> adj(V);
     for (int i = 0; i < edges.size(); i++)
@@ -25,30 +28,16 @@ bool isCycle(int V, vector<vector<int>> &edges)
         adj[edges[i][0]].push_back(edges[i][1]);
         adj[edges[i][1]].push_back(edges[i][0]);
     }
+    bool flagged = false;
     for (int i = 0; i < V; i++)
     {
         if (!visited[i])
         {
             bool flag = solve(i, adj, -1, visited);
             if (flag)
-                return true;
+                cout << "true";
+            flagged = true;
         }
     }
-    return false;
-}
-
-int main()
-{
-    vector<vector<int>> adj = {{2, 3, 1}, {0}, {0, 4}, {0}, {2}};
-    vector<bool> visited(adj.size(), false);
-    for (int i = 0; i < adj.size(); i++)
-    {
-        if (!visited[i])
-        {
-            bool flag = solve(i, adj, -1, visited);
-            if (flag)
-                cout << "True";
-        }
-    }
-    cout << "False";
+    cout << flagged;
 }
